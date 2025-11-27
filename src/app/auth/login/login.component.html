@@ -5,7 +5,7 @@
 
         <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <label>
-                Email
+                Email/Username
                 <input type="email" formControlName="username" />
             </label>
             <div class="err" *ngIf="loginForm.controls.username.touched && loginForm.controls.username.invalid">Valid email
