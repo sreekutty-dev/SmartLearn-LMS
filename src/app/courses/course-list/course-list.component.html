@@ -1,0 +1,27 @@
+<div class="list-wrapper">
+    <!-- <app-navbar></app-navbar> -->
+    <div *ngIf="loading">Loading courses...</div>
+    <div *ngIf="error" class="err">{{ error }}</div>
+
+
+    <!-- {{ courses | json}} -->
+    <div class="grid" *ngIf="courses?.data?.results?.length">
+        <div class="card" *ngFor="let c of courses?.data?.results; trackBy: trackById" (click)="open(c)">
+            <img *ngIf="c.course_thumbnail" [src]="c.course_thumbnail" alt="{{ c.course_name }}" class="thumbnail">
+            <h3>{{ c.course_name }}</h3>
+            <p class="author">by {{ c.course_author }}</p>
+            <p class="description">
+                {{ c.course_description ? (c.course_description | slice:0:140) + (c.course_description.length > 140 ?
+                '...' : '') : '' }}
+            </p>
+            <div class="meta">
+                <span class="rating" *ngIf="c.average_rating > 0">★ {{ c.average_rating }}</span>
+                <span class="lectures">{{ c.lecture_count }} lectures</span>
+                <span class="language">{{ c.course_language }}</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="!loading && (!courses || courses.length === 0)">No courses available.</div>
+</div>

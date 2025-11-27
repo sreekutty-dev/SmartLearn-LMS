@@ -1,0 +1,62 @@
+<div class="details-wrapper">
+  <button class="back-btn" (click)="goBack()" aria-label="Back to courses">← Back</button>
+  <div *ngIf="loading" class="loading">Loading course details...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && course?.data" class="course-details">
+    <div class="header">
+      <img *ngIf="course.data.course_thumbnail" [src]="course.data.course_thumbnail" alt="{{ course.data.course_name }}" class="thumbnail">
+      <div class="header-content">
+        <h1>{{ course.data.course_name }}</h1>
+        <p class="author">by {{ course.data.course_author }}</p>
+        <p class="category" *ngIf="course.data.course_category">{{ course.data.course_category.category_name }}</p>
+      </div>
+    </div>
+
+    <div class="course-info">
+      <div class="info-item">
+        <span class="label">Rating:</span>
+        <span class="value">{{ course.data.average_rating > 0 ? (course.data.average_rating | number:'1.1-1') + '/5' : 'Not rated' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Lectures:</span>
+        <span class="value">{{ course.data.lecture_count }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Language:</span>
+        <span class="value">{{ course.data.course_language }}</span>
+      </div>
+      <div class="info-item" *ngIf="course.data.course_duration">
+        <span class="label">Duration:</span>
+        <span class="value">{{ course.data.course_duration }} minutes</span>
+      </div>
+      <div class="info-item" *ngIf="course.data.is_completed !== null">
+        <span class="label">Status:</span>
+        <span class="value">{{ course.data.is_completed ? 'Completed' : 'In Progress' }}</span>
+      </div>
+    </div>
+
+    <div class="description">
+      <h2>About this course</h2>
+      <p>{{ course.data.course_description }}</p>
+    </div>
+
+    <div class="reviews" *ngIf="course.data.course_reviews && course.data.course_reviews.length > 0">
+      <h2>Reviews ({{ course.data.course_reviews.length }})</h2>
+      <div class="review-item" *ngFor="let review of course.data.course_reviews">
+        <div class="review-header">
+          <span class="rating">★ {{ review.rating }}/5</span>
+          <span class="title">{{ review.review_title }}</span>
+        </div>
+        <p class="review-body">{{ review.review_body }}</p>
+        <span class="review-date">{{ review.created_date | date:'short' }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="!course.data.course_reviews || course.data.course_reviews.length === 0" class="no-reviews">
+      No reviews yet.
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !course" class="not-found">Course not found.</div>
+</div>

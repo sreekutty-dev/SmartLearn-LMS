@@ -1,0 +1,31 @@
+<div class="login-wrapper">
+    <div class="card">
+        <h2>SmartLearn — Login</h2>
+
+
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+            <label>
+                Email
+                <input type="email" formControlName="username" />
+            </label>
+            <div class="err" *ngIf="loginForm.controls.username.touched && loginForm.controls.username.invalid">Valid email
+                required</div>
+
+
+            <label>
+                Password
+                <input type="password" formControlName="password" />
+            </label>
+
+
+            <button type="submit" [disabled]="loading">{{loading ? 'Logging...' : 'Login'}}</button>
+
+
+            <div class="err" *ngIf="error">{{ error }}</div>
+        </form>
+
+
+        <p class="hint">Use the real credentials for the API. If testing locally with mock backend, use the mock
+            password.</p>
+    </div>
+</div>
