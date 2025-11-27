@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 // import { Course } from '../../shared/models/course.model';
 // import { CourseService } from '../course.service';
 import { Course } from 'src/app/shared/course.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { CourseService } from 'src/app/shared/services/course.service';
 
 
@@ -18,7 +19,7 @@ export class CourseListComponent implements OnInit {
   error = '';
 
 
-  constructor(private cs: CourseService, private router: Router) { }
+  constructor(private auth: AuthService,private cs: CourseService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -36,5 +37,15 @@ export class CourseListComponent implements OnInit {
 
   trackById(_: number, item: Course) {
     return item.uid;
+  }
+
+   isLoggedIn(): boolean {
+    return this.auth.isLoggedIn();
+  }
+
+  logout(): void {
+    this.auth.logout();
+    // optional: clear any stored app state here
+    this.router.navigate(['/login']);
   }
 }

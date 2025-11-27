@@ -1,3 +1,12 @@
+<nav class="navbar">
+  <div class="left">
+    <a routerLink="/courses" class="nav-link">Courses</a>
+  </div>
+
+  <div class="right">
+    <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+  </div>
+</nav>
 <div class="details-wrapper">
   <button class="back-btn" (click)="goBack()" aria-label="Back to courses">← Back</button>
   <div *ngIf="loading" class="loading">Loading course details...</div>

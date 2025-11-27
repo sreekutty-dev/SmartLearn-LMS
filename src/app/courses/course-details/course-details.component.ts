@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/shared/course.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { CourseService } from 'src/app/shared/services/course.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class CourseDetailsComponent implements OnInit {
   error = '';
 
   constructor(
+    private auth: AuthService,
     private courseService: CourseService,
     private route: ActivatedRoute,
     public router: Router
@@ -46,5 +48,15 @@ export class CourseDetailsComponent implements OnInit {
   goBack(): void {
     // navigate back to the course list
     this.router.navigate(['/courses']);
+  }
+
+   isLoggedIn(): boolean {
+    return this.auth.isLoggedIn();
+  }
+
+  logout(): void {
+    this.auth.logout();
+    // optional: clear any stored app state here
+    this.router.navigate(['/login']);
   }
 }
